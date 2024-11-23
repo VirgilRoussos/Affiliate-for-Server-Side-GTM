@@ -655,11 +655,7 @@ logToConsole('Rakuten Advertising: Land & tr Values from GA4 tag', land + "|" + 
  
 logToConsole('Rakuten Advertising: Cookie Values', rmStore);
       
-        if (!rmStore) {
-            data.gtmOnFailure();
-            return false;
-        }
-      
+        if (rmStore) {
         const rm_spl = rmStore.split("|");
         for (let p = 0; p < rm_spl.length; p++) {
             if(rm_spl[p].indexOf("ald") > -1) {
@@ -672,8 +668,8 @@ logToConsole('Rakuten Advertising: Cookie Values', rmStore);
                 merchantID = rm_spl[p].split(":")[1];
             }          
         }
-      }
-
+      } else {logToConsole('Rakuten Advertising: rmStore cookie not found, going Linkless mode')}
+    }
             if(getEventData('RAN_mid') && getEventData('RAN_mid').length > 0){
                 merchantID = getEventData('RAN_mid');
 logToConsole('Rakuten Advertising: MID Value from GA4 tag', merchantID); 
@@ -684,8 +680,11 @@ logToConsole('Rakuten Advertising: MID Value from GA4 tag', merchantID);
 
 
         requestUrl += "&ord=" + orderId;
+        
+        if (rmStore) {
         requestUrl += "&land=" + land;
         requestUrl += "&tr=" + tr;
+        }
         requestUrl += "&cur=" + currency;
         requestUrl += "&skulist=" + sku_list;
         requestUrl += "&qlist=" + quantity_list;
@@ -980,11 +979,7 @@ logToConsole('Rakuten Advertising: Land & tr Values from GA4 tag', land + "|" + 
  
 logToConsole('Rakuten Advertising: Cookie Values', rmStore);
       
-        if (!rmStore) {
-            data.gtmOnFailure();
-            return false;
-        }
-      
+        if (rmStore) {
         const rm_spl = rmStore.split("|");
         for (let p = 0; p < rm_spl.length; p++) {
             if(rm_spl[p].indexOf("ald") > -1) {
@@ -997,7 +992,8 @@ logToConsole('Rakuten Advertising: Cookie Values', rmStore);
                 merchantID = rm_spl[p].split(":")[1];
             }          
         }
-      }
+      } else {logToConsole('Rakuten Advertising: rmStore cookie not found, going Linkless mode ')}
+    }
 
             if(getEventData('RAN_mid') && getEventData('RAN_mid').length > 0){
                 merchantID = getEventData('RAN_mid');
@@ -1009,8 +1005,11 @@ logToConsole('Rakuten Advertising: MID Value from GA4 tag', merchantID);
 
 
         requestUrl += "&ord=" + orderId;
+
+        if (rmStore) {
         requestUrl += "&land=" + land;
         requestUrl += "&tr=" + tr;
+        }
         requestUrl += "&cur=" + currency;
         requestUrl += "&skulist=" + sku_list;
         requestUrl += "&qlist=" + quantity_list;
